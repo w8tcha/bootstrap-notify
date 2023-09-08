@@ -1,26 +1,15 @@
 # Bootstrap Notify
-This is a simple plugin that turns standard Bootstrap alerts into "Growl-like" notifications.
+This is a simple plugin that turns standard Bootstrap toats into "Growl-like" notifications.
 
-## Manual Download - Stable Release
-If toy would like to download the latest stable release please follow the link below
-- [Stable Release](https://github.com/mouse0270/bootstrap-notify/releases/latest)
-
-Please keep in mind that the master branch may contain bugs or broken code. Please use the link above if you are not able to debug and correct issues in the master branch. Thank you.
-
-## Bower Officially Supported
-I would like to thank [Błażej Krysiak](https://github.com/IjinPL) for doing this!
-```
-bower install remarkable-bootstrap-notify
-```
-
-## Meteor Officially Supported
-Meteor integration by [zimme](https://github.com/zimme).
-
-```sh
-meteor add mouse0270:bootstrap-notify
-```
+based on the version @mouse0270 (https://github.com/mouse0270/bootstrap-notify)
 
 ## Changelog
+#### Version 4.0.0
+- Cleaned Up Code
+- Fixed Spelling
+- Added Option to prevent Duplicate Notifications
+- TypeScript Definitions File
+
 #### Version 3.1.5 provided by [chrismbarr](https://github.com/chrismbarr) - *Testing*
 - Cleaned Up Code
 - Fixed Spelling
@@ -115,15 +104,8 @@ transition: all 0.5 ease-in-out;
 ##### Version 1.0.0
 - Initial Release
 
-## Demo and Documentation
-- [Demo](http://bootstrap-growl.remabledesigns.com/)
-- [Documentation](http://bootstrap-notify.remabledesigns.com/#documentation)
-
-NOTE: Some users have reported an issue where the demo/documentation links repsond with only `pageok` in the body. If that occurs for you, try emptying your browser cache or an alternate browser. 
-
 ## Dependencies
-- [jQuery v1.10.2](http://jquery.com/)
-- [Bootstrap v2.0.0 - 3.2.0](http://getbootstrap.com/)
+- [Bootstrap v5.3.1](http://getbootstrap.com/)
 
 ## Copyright and License
 The MIT License (MIT)
