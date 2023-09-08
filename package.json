@@ -15,7 +15,7 @@
     "growl",
     "message",
     "notice",
-	"toast"
+    "toast"
   ],
   "author": "mouse0270 <rmcintosh@remabledesigns.com>",
   "license": "MIT",
@@ -31,10 +31,7 @@
   "devDependencies": {
     "grunt": "^1.6.1",
     "grunt-cli": "^1.4.3",
-    "grunt-contrib-jshint": "^3.2.0",
-    "grunt-contrib-uglify": "^5.2.2",
-    "grunt-exec": "^0.4.6",
-    "spacejam": "^1.0.0"
+    "grunt-contrib-uglify": "^5.2.2"
   },
   "scripts": {
     "test": "grunt test"
