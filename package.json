@@ -1,5 +1,5 @@
 {
-  "name": "bootstrap-notify",
+  "name": "@w8tcha/bootstrap-notify",
   "version": "4.0.0",
   "description": "This is a simple plugin that turns standard Bootstrap toats into \"Growl-like\" notifications.",
   "repository": {
@@ -15,7 +15,7 @@
     "message",
     "toast"
   ],
-  "author": "mouse0270 <rmcintosh@remabledesigns.com>",
+  "author": "Ingo Herbote",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/w8tcha/bootstrap-notify/issues"
