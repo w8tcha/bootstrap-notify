@@ -1,8 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-	$('[data-toggle="tooltip"]').tooltip({
-		container: 'body'
-	});
-
 	// Because it makes beautiful source code!
 	$('.pre-container').each(function() {
 		var dataType = $(this).data('type'),
