@@ -3,7 +3,11 @@ This is a simple plugin that turns standard Bootstrap toats into "Growl-like" no
 
 based on the version @mouse0270 (https://github.com/mouse0270/bootstrap-notify)
 
-- [npm](https://www.npmjs.com/package/@w8tcha/bootstrap-notify): `npm install --save @w8tcha/bootstrap-notify`
+[![NPM Version](http://img.shields.io/npm/v/@w8tcha/bootstrap-notify.svg?style=flat)](https://npmjs.org/package/@w8tcha/bootstrap-notify)
+[![NPM Downloads](http://img.shields.io/npm/dm/@w8tcha/bootstrap-notify.svg?style=flat)](https://npmjs.org/package/@w8tcha/bootstrap-notify)
+
+## Install
+- `npm install --save @w8tcha/bootstrap-notify`
 
 ## Changelog
 #### Version 4.0.0
