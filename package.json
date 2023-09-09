@@ -4,7 +4,7 @@
   "description": "This is a simple plugin that turns standard Bootstrap toats into \"Growl-like\" notifications.",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mouse0270/bootstrap-notify.git"
+    "url": "git://github.com/w8tcha/bootstrap-notify.git"
   },
   "keywords": [
     "bootstrap",
