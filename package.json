@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/w8tcha/bootstrap-notify/issues"
   },
-  "homepage": "https://github.com/w8tcha/bootstrap-notify/",
+  "homepage": "https://w8tcha.github.io/bootstrap-notify/",
   "main": "bootstrap-notify.js",
   "files": [
     "bootstrap-notify.js",
