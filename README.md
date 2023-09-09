@@ -6,6 +6,9 @@ based on the version @mouse0270 (https://github.com/mouse0270/bootstrap-notify)
 [![NPM Version](http://img.shields.io/npm/v/@w8tcha/bootstrap-notify.svg?style=flat)](https://npmjs.org/package/@w8tcha/bootstrap-notify)
 [![NPM Downloads](http://img.shields.io/npm/dm/@w8tcha/bootstrap-notify.svg?style=flat)](https://npmjs.org/package/@w8tcha/bootstrap-notify)
 
+## Demo & documentation
+- (https://w8tcha.github.io/bootstrap-notify/)
+
 ## Install
 - `npm install --save @w8tcha/bootstrap-notify`
 
