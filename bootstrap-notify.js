@@ -30,10 +30,10 @@ function Notify(content, options) {
             // (<br> vs <br /> for example)
             // So we have to force-parse this as HTML here!
             const isSameTitle = title === `${notification.settings.content.title}`.trim(),
-                isSameMsg = message === `${notification.settings.content.message}`.trim(),
-                isSameType = $el.classList.contains(`alert-${notification.settings.type}`);
+                isSameMsg = message === `${notification.settings.content.message}`.trim();
+                //isSameType = $el.classList.contains(`alert-${notification.settings.type}`);
 
-            if (isSameTitle && isSameMsg && isSameType) {
+            if (isSameTitle && isSameMsg /*&& isSameType*/) {
                 //we found the dupe. Set the var and stop checking.
                 isDupe = true;
             }
@@ -46,7 +46,6 @@ function Notify(content, options) {
     // Create the defaults once
     const defaults = {
         element: "body",
-        position: null,
         type: "info",
         allow_dismiss: true,
         allow_duplicates: true,
@@ -209,7 +208,9 @@ extend(Notify.prototype,
             }
 
             if ((this.settings.delay <= 0 && !this.settings.showProgressbar) || !this.settings.showProgressbar) {
-                this.$ele.querySelector('[data-notify="progressbar"]').remove();
+                if (this.$ele.querySelector('[data-notify="progressbar"]') != null) {
+                    this.$ele.querySelector('[data-notify="progressbar"]').remove();
+                }
             }
         },
         setIcon: function () {
@@ -217,12 +218,17 @@ extend(Notify.prototype,
                 this.$ele.querySelector('[data-notify="icon"]').className += ` ${this.settings.content.icon}`;
             } else {
                 if (this.$ele.querySelector('[data-notify="icon"]').nodeName === "IMG") {
-                    this.$ele.querySelector('[data-notify="icon"]').src = this.settings.content.icon;
+                    const image = this.$ele.querySelector('[data-notify="icon"]');
+
+                    image.src = this.settings.content.icon;
+                    image.className = "me-2";
+
                 } else {
                     const image = document.createElement("img");
 
-                    image.src = `"${this.settings.content.icon}"`;
+                    image.src = `${this.settings.content.icon}`;
                     image.alt = "Notify Icon";
+                    image.className = "me-2";
 
                     this.$ele.querySelector('[data-notify="icon"]').append(image);
                 }
@@ -246,7 +252,7 @@ extend(Notify.prototype,
             if (document.querySelector(".toast-container") == null) {
                 const container = document.createElement("div");
 
-                container.className = "toast-container";
+                container.className = "toast-container position-fixed";
 
                 switch (this.settings.placement.from) {
                 case "top":
@@ -285,9 +291,11 @@ extend(Notify.prototype,
         bind: function () {
             var self = this;
 
-            this.$ele.querySelector('[data-notify="dismiss"]').addEventListener("click", () => {
-                self.close();
-            });
+            if (this.$ele.querySelector('[data-notify="dismiss"]') != null) {
+                this.$ele.querySelector('[data-notify="dismiss"]').addEventListener("click", () => {
+                    self.close();
+                });
+            }
 
             if (self.settings.onClick === "function") {
                 this.$ele.addEventListener("click",
