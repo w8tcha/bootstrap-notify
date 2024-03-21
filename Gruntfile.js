@@ -14,9 +14,20 @@ module.exports = function(grunt) {
 					'bootstrap-notify.min.js': ['bootstrap-notify.js']
 				}
 			}
-		}
+		},
+		devUpdate: {
+            main: {
+                options: {
+                    reportUpdated: true,
+					updateType: "force",
+					semver: false
+                }
+            }
+        }
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks("@w8tcha/grunt-dev-update");
+	
 	grunt.registerTask('default', ['uglify']);
 };

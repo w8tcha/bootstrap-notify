@@ -27,6 +27,7 @@
     "bootstrap-notify.min.js"
   ],
   "devDependencies": {
+    "@w8tcha/grunt-dev-update": "^2.3.1",
     "grunt": "^1.6.1",
     "grunt-cli": "^1.4.3",
     "grunt-contrib-uglify": "^5.2.2"
