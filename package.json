@@ -1,7 +1,8 @@
 {
   "name": "@w8tcha/bootstrap-notify",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "This is a simple plugin that turns standard Bootstrap toats into \"Growl-like\" notifications.",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git://github.com/w8tcha/bootstrap-notify.git"
@@ -21,18 +22,26 @@
     "url": "https://github.com/w8tcha/bootstrap-notify/issues"
   },
   "homepage": "https://w8tcha.github.io/bootstrap-notify/",
-  "main": "bootstrap-notify.js",
-  "files": [
-    "bootstrap-notify.js",
-    "bootstrap-notify.min.js"
-  ],
+  "main": ".dist/bootstrap-notify.js",
+  "types": "./dist/bootstrap-notify.d.ts",
+  "exports": {
+    "import": "./dist/bootstrap-notify.js",
+    "require": "./dist/bootstrap-notify.umd.cjs"
+  },
+  "peerDependencies": {
+    "bootstrap": "^5.3"
+  },
   "devDependencies": {
-    "@w8tcha/grunt-dev-update": "^2.3.4",
-    "grunt": "^1.6.1",
-    "grunt-cli": "^1.5.0",
-    "grunt-contrib-uglify": "^5.2.2"
+    "@types/bootstrap": "^5.2.10",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.2",
+    "vite-plugin-banner": "^0.8.1",
+    "vite-plugin-dts": "^4.5.3",
+    "vite-plugin-lib-inject-css": "^2.2.2"
   },
   "scripts": {
-    "test": "grunt test"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   }
 }
