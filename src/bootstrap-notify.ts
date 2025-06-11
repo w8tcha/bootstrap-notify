@@ -4,7 +4,7 @@
 * Author: Mouse0270 aka Robert McIntosh
 * Fork by w8tcha
 * License: MIT License
-* Website: https://github.com/w8tcha/bootstrap-growl
+* Website: https://w8tcha.github.io/bootstrap-notify/
 */
 
 import * as bootstrap from 'bootstrap';
@@ -116,7 +116,7 @@ export default class Notify {
 		var self = this;
 		this.buildNotify();
 		if (this.settings.content && this.settings.content.icon) {
-			this.setIcon();
+			this.setIcon(this.settings.content.icon);
 		}
 		this.placement();
 		this.bind();
@@ -166,9 +166,9 @@ export default class Notify {
 		}
 	}
 
-	setIcon(): void {
+	setIcon(icon:string): void {
 		if (this.settings.icon_type && this.settings.icon_type.toLowerCase() === 'class') {
-			this.$ele.querySelector('[data-notify="icon"]')!.className += ` ${this.settings.content!.icon}`;
+			this.$ele.querySelector('[data-notify="icon"]')!.className += ` ${icon}`;
 		} else {
 			if (this.$ele.querySelector('[data-notify="icon"]')!.nodeName === 'IMG') {
 				const image = this.$ele.querySelector<HTMLImageElement>('[data-notify="icon"]')!;
@@ -254,9 +254,10 @@ export default class Notify {
 		const dismiss = this.$ele.querySelector<HTMLElement>('[data-notify="dismiss"]');
 
 		if (dismiss) {
-			dismiss.addEventListener('click', () => {
-				self.close();
-			});
+			dismiss.addEventListener('click',
+				() => {
+					self.close();
+				});
 		}
 
 		if (self.settings.onClick) {
@@ -268,42 +269,51 @@ export default class Notify {
 				});
 		}
 
-		this.$ele.addEventListener('mouseover', () => {
-			this.$ele.dataset.hover = 'true';
-		});
+		this.$ele.addEventListener('mouseover',
+			() => {
+				this.$ele.dataset.hover = 'true';
+			});
 
 
-		this.$ele.addEventListener('mouseout', () => {
-			this.$ele.dataset.hover = 'false';
-		});
+		this.$ele.addEventListener('mouseout',
+			() => {
+				this.$ele.dataset.hover = 'false';
+			});
 
 		this.$ele.dataset.hover = 'false';
 
 		if (this.settings.delay && this.settings.delay > 0) {
 			self.$ele.dataset.notifyDelay = self.settings.delay!.toString();
 
+			const delay = parseInt(this.$ele.dataset.notifyDelay!) - this.settings.timer!;
+			const percent = ((this.settings.delay! - delay) / this.settings.delay!) * 100;
+			let width = 0;
+
 			var timer = setInterval(() => {
-					const delay = parseInt(this.$ele.dataset.notifyDelay!) - this.settings.timer!;
+					width++;
+
 					if ((this.$ele.dataset.hover === 'false' && this.settings.mouse_over === 'pause') ||
 						this.settings.mouse_over !== 'pause') {
-						const percent = ((this.settings.delay! - delay) / this.settings.delay!) * 100;
+
 						this.$ele.dataset.notifyDelay = delay.toString();
 
 						if (this.settings.showProgressbar) {
 
 							const div = this.$ele.querySelector<HTMLElement>('[data-notify="progressbar"] > div')!;
 
-							this.$ele.querySelector('[data-notify="progressbar"]')!.setAttribute('aria-valuenow', percent.toString());
+							this.$ele.querySelector('[data-notify="progressbar"]')!.setAttribute('aria-valuenow',
+								width.toString());
 
-							div.style.width = percent + '%';
+							div.style.width = width + '%';
 						}
 					}
-					if (delay <= -(this.settings.timer)) {
+
+					if (width === 100) {
 						clearInterval(timer);
 						this.close();
 					}
 				},
-				self.settings.timer);
+				percent);
 		}
 	}
 

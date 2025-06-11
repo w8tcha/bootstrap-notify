@@ -13,7 +13,7 @@ export default defineConfig({
 * Author: Mouse0270 aka Robert McIntosh
 * Fork by w8tcha
 * License: MIT License
-* Website: https://github.com/w8tcha/bootstrap-growl
+* Website: https://w8tcha.github.io/bootstrap-notify/
 */`)
 	],
 	build: {

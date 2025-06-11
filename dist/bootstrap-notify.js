@@ -2,21 +2,22 @@
 * Project: Bootstrap Notify = v5.0.0
 * Description: Turns standard Bootstrap toasts into "Growl-like" notifications.
 * Author: Mouse0270 aka Robert McIntosh
+* Fork by w8tcha
 * License: MIT License
-* Website: https://github.com/mouse0270/bootstrap-growl
+* Website: https://w8tcha.github.io/bootstrap-notify/
 */
 var u = Object.defineProperty;
-var p = (n, t, s) => t in n ? u(n, t, { enumerable: !0, configurable: !0, writable: !0, value: s }) : n[t] = s;
-var r = (n, t, s) => p(n, typeof t != "symbol" ? t + "" : t, s);
+var p = (a, t, e) => t in a ? u(a, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : a[t] = e;
+var r = (a, t, e) => p(a, typeof t != "symbol" ? t + "" : t, e);
 import * as b from "bootstrap";
 class v {
-  constructor(t, s) {
+  constructor(t, e) {
     r(this, "$ele", document.createElement("div"));
     r(this, "settings");
     r(this, "_defaults");
     r(this, "animations");
     r(this, "notify");
-    const e = {
+    const s = {
       element: "body",
       type: "info",
       allow_dismiss: !0,
@@ -51,7 +52,7 @@ class v {
         "</div>"
       ].join("")
     };
-    this.settings = e;
+    this.settings = s;
     const i = {
       content: {
         message: typeof t == "object" ? t.message : t,
@@ -59,57 +60,57 @@ class v {
         icon: typeof t == "object" && t.icon ? t.icon : ""
       }
     };
-    s = c({}, i, s), this.settings = c({}, e, s), this._defaults = e, this.animations = {
+    e = c({}, i, e), this.settings = c({}, s, e), this._defaults = s, this.animations = {
       start: "webkitAnimationStart oanimationstart MSAnimationStart animationstart",
       end: "webkitAnimationEnd oanimationend MSAnimationEnd animationend"
     }, typeof this.settings.offset == "number" && (this.settings.offset = { x: this.settings.offset, y: this.settings.offset }), (this.settings.allow_duplicates || !this.settings.allow_duplicates && !this.isDuplicateNotification(this)) && this.init();
   }
   isDuplicateNotification(t) {
-    let s = !1;
-    return document.querySelectorAll('[data-notify="container"]').forEach((e) => {
+    let e = !1;
+    return document.querySelectorAll('[data-notify="container"]').forEach((s) => {
       var d, h, m, f, g, y;
-      const i = ((d = e.querySelector('[data-notify="title"]')) == null ? void 0 : d.innerHTML.trim()) ?? "", o = ((h = e.querySelector('[data-notify="message"]')) == null ? void 0 : h.innerHTML.trim()) ?? "", a = i === ((f = (m = t.settings.content) == null ? void 0 : m.title) == null ? void 0 : f.trim()), l = o === ((y = (g = t.settings.content) == null ? void 0 : g.message) == null ? void 0 : y.trim());
-      return a && l && (s = !0), !s;
-    }), s;
+      const i = ((d = s.querySelector('[data-notify="title"]')) == null ? void 0 : d.innerHTML.trim()) ?? "", l = ((h = s.querySelector('[data-notify="message"]')) == null ? void 0 : h.innerHTML.trim()) ?? "", n = i === ((f = (m = t.settings.content) == null ? void 0 : m.title) == null ? void 0 : f.trim()), o = l === ((y = (g = t.settings.content) == null ? void 0 : g.message) == null ? void 0 : y.trim());
+      return n && o && (e = !0), !e;
+    }), e;
   }
   init() {
     var t = this;
-    this.buildNotify(), this.settings.content && this.settings.content.icon && this.setIcon(), this.placement(), this.bind(), this.notify = {
+    this.buildNotify(), this.settings.content && this.settings.content.icon && this.setIcon(this.settings.content.icon), this.placement(), this.bind(), this.notify = {
       $ele: this.$ele,
       close() {
         t.close();
       }
     };
   }
-  update(t, s) {
-    const e = typeof t == "string" ? { [t]: s } : t;
-    for (const i in e) {
-      const o = this.$ele.querySelector(`[data-notify="${i}"]`);
-      o && (o.innerHTML = e[i]);
+  update(t, e) {
+    const s = typeof t == "string" ? { [t]: e } : t;
+    for (const i in s) {
+      const l = this.$ele.querySelector(`[data-notify="${i}"]`);
+      l && (l.innerHTML = s[i]);
     }
   }
   buildNotify() {
-    const t = this.settings.content, s = document.createElement("div");
-    if (s.innerHTML = this.formatTemplate(
+    const t = this.settings.content, e = document.createElement("div");
+    if (e.innerHTML = this.formatTemplate(
       this.settings.template,
       this.settings.type,
       t.title,
       t.message
-    ), this.$ele = s.firstChild, this.$ele.dataset.notifyPosition = `${this.settings.placement.from}-${this.settings.placement.align}`, this.$ele.dataset.bsDelay = this.settings.delay.toString(), !this.settings.allow_dismiss) {
-      const e = this.$ele.querySelector('[data-notify="dismiss"]');
-      e && (e.style.display = "none");
+    ), this.$ele = e.firstChild, this.$ele.dataset.notifyPosition = `${this.settings.placement.from}-${this.settings.placement.align}`, this.$ele.dataset.bsDelay = this.settings.delay.toString(), !this.settings.allow_dismiss) {
+      const s = this.$ele.querySelector('[data-notify="dismiss"]');
+      s && (s.style.display = "none");
     }
     (this.settings.delay <= 0 && !this.settings.showProgressbar || !this.settings.showProgressbar) && this.$ele.querySelector('[data-notify="progressbar"]') && this.$ele.querySelector('[data-notify="progressbar"]').remove();
   }
-  setIcon() {
+  setIcon(t) {
     if (this.settings.icon_type && this.settings.icon_type.toLowerCase() === "class")
-      this.$ele.querySelector('[data-notify="icon"]').className += ` ${this.settings.content.icon}`;
+      this.$ele.querySelector('[data-notify="icon"]').className += ` ${t}`;
     else if (this.$ele.querySelector('[data-notify="icon"]').nodeName === "IMG") {
-      const t = this.$ele.querySelector('[data-notify="icon"]');
-      t.src = this.settings.content.icon, t.className = "me-2";
+      const e = this.$ele.querySelector('[data-notify="icon"]');
+      e.src = this.settings.content.icon, e.className = "me-2";
     } else {
-      const t = document.createElement("img");
-      t.src = `${this.settings.content.icon}`, t.alt = "Notify Icon", t.className = "me-2", this.$ele.querySelector('[data-notify="icon"]').append(t);
+      const e = document.createElement("img");
+      e.src = `${this.settings.content.icon}`, e.alt = "Notify Icon", e.className = "me-2", this.$ele.querySelector('[data-notify="icon"]').append(e);
     }
   }
   placement() {
@@ -137,38 +138,48 @@ class v {
       }
       document.querySelector(this.settings.element).append(i);
     }
-    const e = document.querySelector(".toast-container");
-    e && (this.settings.newest_on_top ? e.prepend(this.$ele) : e.append(this.$ele)), typeof t.settings.onShow == "function" && t.settings.onShow.call(this.$ele);
+    const s = document.querySelector(".toast-container");
+    s && (this.settings.newest_on_top ? s.prepend(this.$ele) : s.append(this.$ele)), typeof t.settings.onShow == "function" && t.settings.onShow.call(this.$ele);
   }
   bind() {
     var t = this;
-    const s = this.$ele.querySelector('[data-notify="dismiss"]');
-    if (s && s.addEventListener("click", () => {
-      t.close();
-    }), t.settings.onClick && this.$ele.addEventListener(
+    const e = this.$ele.querySelector('[data-notify="dismiss"]');
+    if (e && e.addEventListener(
+      "click",
+      () => {
+        t.close();
+      }
+    ), t.settings.onClick && this.$ele.addEventListener(
       "click",
       (i) => {
         i.target !== t.$ele.querySelector('[data-notify="dismiss"]') && t.settings.onClick.call(this);
       }
-    ), this.$ele.addEventListener("mouseover", () => {
-      this.$ele.dataset.hover = "true";
-    }), this.$ele.addEventListener("mouseout", () => {
-      this.$ele.dataset.hover = "false";
-    }), this.$ele.dataset.hover = "false", this.settings.delay && this.settings.delay > 0) {
+    ), this.$ele.addEventListener(
+      "mouseover",
+      () => {
+        this.$ele.dataset.hover = "true";
+      }
+    ), this.$ele.addEventListener(
+      "mouseout",
+      () => {
+        this.$ele.dataset.hover = "false";
+      }
+    ), this.$ele.dataset.hover = "false", this.settings.delay && this.settings.delay > 0) {
       t.$ele.dataset.notifyDelay = t.settings.delay.toString();
-      var e = setInterval(
+      const i = parseInt(this.$ele.dataset.notifyDelay) - this.settings.timer, l = (this.settings.delay - i) / this.settings.delay * 100;
+      let n = 0;
+      var s = setInterval(
         () => {
-          const i = parseInt(this.$ele.dataset.notifyDelay) - this.settings.timer;
-          if (this.$ele.dataset.hover === "false" && this.settings.mouse_over === "pause" || this.settings.mouse_over !== "pause") {
-            const o = (this.settings.delay - i) / this.settings.delay * 100;
-            if (this.$ele.dataset.notifyDelay = i.toString(), this.settings.showProgressbar) {
-              const a = this.$ele.querySelector('[data-notify="progressbar"] > div');
-              this.$ele.querySelector('[data-notify="progressbar"]').setAttribute("aria-valuenow", o.toString()), a.style.width = o + "%";
-            }
+          if (n++, (this.$ele.dataset.hover === "false" && this.settings.mouse_over === "pause" || this.settings.mouse_over !== "pause") && (this.$ele.dataset.notifyDelay = i.toString(), this.settings.showProgressbar)) {
+            const o = this.$ele.querySelector('[data-notify="progressbar"] > div');
+            this.$ele.querySelector('[data-notify="progressbar"]').setAttribute(
+              "aria-valuenow",
+              n.toString()
+            ), o.style.width = n + "%";
           }
-          i <= -this.settings.timer && (clearInterval(e), this.close());
+          n === 100 && (clearInterval(s), this.close());
         },
-        t.settings.timer
+        l
       );
     }
   }
@@ -179,26 +190,26 @@ class v {
   formatTemplate(...t) {
     return t[0].replace(
       /(\{\{\d\}\}|\{\d\})/g,
-      (e) => {
-        if (e.substring(0, 2) === "{{") return e;
-        const i = parseInt(e.match(/\d/)[0]);
+      (s) => {
+        if (s.substring(0, 2) === "{{") return s;
+        const i = parseInt(s.match(/\d/)[0]);
         return t[i + 1];
       }
     );
   }
 }
-function c(...n) {
+function c(...a) {
   const t = {};
-  let s = !1, e = 0;
-  const i = n.length;
-  Object.prototype.toString.call(n[0]) === "[object Boolean]" && (s = n[0], e++);
-  const o = (a) => {
-    for (const l in a)
-      Object.prototype.hasOwnProperty.call(a, l) && (s && Object.prototype.toString.call(a[l]) === "[object Object]" ? t[l] = c(!0, t[l], a[l]) : t[l] = a[l]);
+  let e = !1, s = 0;
+  const i = a.length;
+  Object.prototype.toString.call(a[0]) === "[object Boolean]" && (e = a[0], s++);
+  const l = (n) => {
+    for (const o in n)
+      Object.prototype.hasOwnProperty.call(n, o) && (e && Object.prototype.toString.call(n[o]) === "[object Object]" ? t[o] = c(!0, t[o], n[o]) : t[o] = n[o]);
   };
-  for (; e < i; e++) {
-    const a = n[e];
-    o(a);
+  for (; s < i; s++) {
+    const n = a[s];
+    l(n);
   }
   return t;
 }

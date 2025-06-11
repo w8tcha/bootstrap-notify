@@ -1,52 +1,50 @@
 import Notify from '../../dist/bootstrap-notify';
+import hljs from 'highlight.js';
 
-document.addEventListener("DOMContentLoaded", function () {
-	// Because it makes beautiful source code!
-	/*document.querySelectorAll('.pre-container').forEach(container => {
+document.addEventListener('DOMContentLoaded', function () {
+	document.querySelectorAll('.pre-container').forEach(container => {
 		var dataType = container.dataset.type,
-		dataRun = (container.dataset.run === 'true' ? true : false),
+			dataRun = (container.dataset.run === 'true' ? true : false),
 			code = container.textContent.replace(/\n/, '').replace(/\t\t\t\t/g, '').replace(/^\s+|\s+$/g, '');
-		container.innerHTML = '<pre data-run="' + dataRun + '"><code class="' + dataType.toLowerCase() + '"></code></pre>';
-		container.querySelector('code').innerHTML = code;
-	});*/
-	$('.pre-container').each(function () {
-		var dataType = $(this).data('type'),
-			dataRun = ($(this).data('run') === true ? true : false),
-			code = $(this).text().replace(/\n/, '').replace(/\t\t\t\t/g, '').replace(/^\s+|\s+$/g, '');
-		$(this).html('<pre data-run="' + dataRun + '"><code class="' + dataType.toLowerCase() + '"></code></pre>');
-		$(this).find('code').text(code);
+		container.innerHTML = `<pre data-run="${dataRun}"><code class="${dataType.toLowerCase()}"></code></pre>`;
+		container.querySelector('code').textContent = code;
 	});
+	
 
-    // Add line numbers since Highlight.js does not include them.
-	$('.pre-container').each(function () {
-		if ($(this).find('pre').data('run') === true) {
-			$(this).append('<a class="btn btn-primary m-2" href="#run-sample">Generate Notify!</a>');
+	// Add line numbers since Highlight.js does not include them.
+	document.querySelectorAll('.pre-container').forEach(container => {
+		if (container.querySelector('pre').dataset.run === 'true') {
+			const button = document.createElement("a");
+			button.classList.add('btn', 'btn-primary', 'm-2');
+			button.href = '#run-sample';
+			button.innerText = 'Generate Notify!';
+			container.append(button);
 		}
 	});
 
+	hljs.highlightAll();
 
-	$('pre code').each(function(i, block) {
-		hljs.highlightBlock(block);
+	document.querySelectorAll('.pre-container').forEach(link => {
+		link.addEventListener('click', (event) => {
+			event.preventDefault();
+			const code = event.currentTarget.querySelector('code');
+
+			eval(code.innerText);
+		});
 	});
 
-	$('a[href="#run-sample"]').on('click', function(event) {
-		event.preventDefault();
-		var code = $(this).prev('pre').find('code');
-
-		eval(code.text());
-	});
 
     // Scroll top button
-    var scrollToTopBtn = document.querySelector(".btn-scroll"), rootElement = document.documentElement;
+	var scrollToTopBtn = document.querySelector('.btn-scroll'), rootElement = document.documentElement;
 
     function handleScroll() {
         const scrollTotal = rootElement.scrollHeight - rootElement.clientHeight;
         if ((rootElement.scrollTop / scrollTotal) > 0.15) {
             // Show button
-            scrollToTopBtn.classList.add("show-btn-scroll");
+            scrollToTopBtn.classList.add('show-btn-scroll');
         } else {
             // Hide button
-            scrollToTopBtn.classList.remove("show-btn-scroll");
+            scrollToTopBtn.classList.remove('show-btn-scroll');
         }
     }
 
@@ -56,32 +54,32 @@ document.addEventListener("DOMContentLoaded", function () {
         // Scroll to top logic
         rootElement.scrollTo({
             top: 0,
-            behavior: "smooth"
+            behavior: 'smooth'
         });
     }
 
-    scrollToTopBtn.addEventListener("click", scrollToTop);
-    document.addEventListener("scroll", handleScroll);
+    scrollToTopBtn.addEventListener('click', scrollToTop);
+    document.addEventListener('scroll', handleScroll);
 
-	$('form[action="#GenerateNotify"]').submit(function (event) {
+	document.querySelector('form[action="#GenerateNotify"]').addEventListener('submit', (event) => {
 		event.preventDefault();
 
 		const position = document.querySelector('input[name="position"]:checked').id;
 
-		var notify = new Notify({
-			icon: $('[data-notify="icon"]').html(),
-			title: $('[data-notify="title"]').html(),
-			message: $('[data-notify="message"]').html()
+		const notify = new Notify({
+			icon: document.querySelector('[data-notify="icon"]').innerHTML,
+			title: document.querySelector('[data-notify="title"]').innerHTML,
+			message: document.querySelector('[data-notify="message"]').innerHTML
 		},{
-			type: $('input[name="type"]:checked').val(),
-			allow_dismiss: $('#demo-allow-dismiss').is(':checked'),
-			newest_on_top: $('#demo-newest-on-top').is(':checked'),
+			type: document.querySelector('input[name="type"]:checked').value,
+			allow_dismiss: document.querySelector('#demo-allow-dismiss').checked,
+			newest_on_top: document.querySelector('#demo-newest-on-top').checked,
 			placement: {
-				from: position.split("-")[0],
-				align: position.split("-")[1]
+				from: position.split('-')[0],
+				align: position.split('-')[1]
 			},
-			delay: $('#demo-delay').val(),
-			mouse_over: ($('#demo-pause-on-hover').is(':checked') ? "pause" : null)
+			delay: document.querySelector('#demo-delay').value,
+			mouse_over: (document.querySelector('#demo-pause-on-hover').checked ? 'pause' : null)
 		});
 		return false;
 	});

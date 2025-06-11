@@ -17,7 +17,7 @@ export default class Notify {
     init(): void;
     update(command: string | Record<string, string>, update?: string): void;
     buildNotify(): void;
-    setIcon(): void;
+    setIcon(icon: string): void;
     placement(): void;
     bind(): void;
     close(): void;
