@@ -1,5 +1,5 @@
 /*
-* Project: Bootstrap Notify = v4.0.0
+* Project: Bootstrap Notify
 * Description: Turns standard Bootstrap toasts into "Growl-like" notifications.
 * Author: Mouse0270 aka Robert McIntosh
 * Fork by w8tcha

@@ -1,12 +1,12 @@
 /*
-* Project: Bootstrap Notify = v5.0.0
+* Project: Bootstrap Notify = v5.0.1
 * Description: Turns standard Bootstrap toasts into "Growl-like" notifications.
 * Author: Mouse0270 aka Robert McIntosh
 * Fork by w8tcha
 * License: MIT License
 * Website: https://w8tcha.github.io/bootstrap-notify/
 */
-var u = Object.defineProperty;
+import './bootstrap-notify.css';var u = Object.defineProperty;
 var p = (a, t, e) => t in a ? u(a, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : a[t] = e;
 var r = (a, t, e) => p(a, typeof t != "symbol" ? t + "" : t, e);
 import * as b from "bootstrap";

@@ -1,6 +1,6 @@
 {
   "name": "@w8tcha/bootstrap-notify",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "This is a simple plugin that turns standard Bootstrap toats into \"Growl-like\" notifications.",
   "type": "module",
   "repository": {
