@@ -13,6 +13,14 @@ https://w8tcha.github.io/bootstrap-notify/
 - `npm install --save @w8tcha/bootstrap-notify`
 
 ## Changelog
+#### Version 5.0.0
+- converted to a module
+``` javascript
+import Notify from '/dist/bootstrap-notify';
+
+new Notify({message: 'Hello World'},{type: 'danger'});
+```
+
 #### Version 4.0.0
 - complete rewrite in javascript
 - removed jquery dependency
