@@ -286,15 +286,12 @@ export default class Notify {
 		if (this.settings.delay && this.settings.delay > 0) {
 			self.$ele.dataset.notifyDelay = self.settings.delay!.toString();
 
-			const delay = parseInt(this.$ele.dataset.notifyDelay!) - this.settings.timer!;
-			const percent = ((this.settings.delay! - delay) / this.settings.delay!) * 100;
-			let width = 0;
-
 			var timer = setInterval(() => {
-					width++;
+					const delay = this.settings.delay! - this.settings.timer;
 
 					if ((this.$ele.dataset.hover === 'false' && this.settings.mouse_over === 'pause') ||
 						this.settings.mouse_over !== 'pause') {
+						const percent = ((this.settings.delay! - delay) / this.settings.delay!) * 100;
 
 						this.$ele.dataset.notifyDelay = delay.toString();
 
@@ -302,19 +299,19 @@ export default class Notify {
 
 							const div = this.$ele.querySelector<HTMLElement>('[data-notify="progressbar"] > div')!;
 
-							this.$ele.querySelector('[data-notify="progressbar"]')!.setAttribute('aria-valuenow',
-								width.toString());
+							div.setAttribute('aria-valuenow',
+								percent.toString());
 
-							div.style.width = width + '%';
+							div.style.width = percent + '%';
 						}
 					}
 
-					if (width === 100) {
+					if (delay <= -(self.settings.timer)) {
 						clearInterval(timer);
 						this.close();
 					}
 				},
-				percent);
+				self.settings.timer);
 		}
 	}
 

@@ -1,5 +1,5 @@
 /*
-* Project: Bootstrap Notify = v5.0.1
+* Project: Bootstrap Notify = v5.0.2
 * Description: Turns standard Bootstrap toasts into "Growl-like" notifications.
 * Author: Mouse0270 aka Robert McIntosh
 * Fork by w8tcha
@@ -10,7 +10,7 @@ import './bootstrap-notify.css';var u = Object.defineProperty;
 var p = (a, t, e) => t in a ? u(a, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : a[t] = e;
 var r = (a, t, e) => p(a, typeof t != "symbol" ? t + "" : t, e);
 import * as b from "bootstrap";
-class v {
+class $ {
   constructor(t, e) {
     r(this, "$ele", document.createElement("div"));
     r(this, "settings");
@@ -69,8 +69,8 @@ class v {
     let e = !1;
     return document.querySelectorAll('[data-notify="container"]').forEach((s) => {
       var d, h, m, f, g, y;
-      const i = ((d = s.querySelector('[data-notify="title"]')) == null ? void 0 : d.innerHTML.trim()) ?? "", l = ((h = s.querySelector('[data-notify="message"]')) == null ? void 0 : h.innerHTML.trim()) ?? "", n = i === ((f = (m = t.settings.content) == null ? void 0 : m.title) == null ? void 0 : f.trim()), o = l === ((y = (g = t.settings.content) == null ? void 0 : g.message) == null ? void 0 : y.trim());
-      return n && o && (e = !0), !e;
+      const i = ((d = s.querySelector('[data-notify="title"]')) == null ? void 0 : d.innerHTML.trim()) ?? "", o = ((h = s.querySelector('[data-notify="message"]')) == null ? void 0 : h.innerHTML.trim()) ?? "", n = i === ((f = (m = t.settings.content) == null ? void 0 : m.title) == null ? void 0 : f.trim()), l = o === ((y = (g = t.settings.content) == null ? void 0 : g.message) == null ? void 0 : y.trim());
+      return n && l && (e = !0), !e;
     }), e;
   }
   init() {
@@ -85,8 +85,8 @@ class v {
   update(t, e) {
     const s = typeof t == "string" ? { [t]: e } : t;
     for (const i in s) {
-      const l = this.$ele.querySelector(`[data-notify="${i}"]`);
-      l && (l.innerHTML = s[i]);
+      const o = this.$ele.querySelector(`[data-notify="${i}"]`);
+      o && (o.innerHTML = s[i]);
     }
   }
   buildNotify() {
@@ -166,20 +166,22 @@ class v {
       }
     ), this.$ele.dataset.hover = "false", this.settings.delay && this.settings.delay > 0) {
       t.$ele.dataset.notifyDelay = t.settings.delay.toString();
-      const i = parseInt(this.$ele.dataset.notifyDelay) - this.settings.timer, l = (this.settings.delay - i) / this.settings.delay * 100;
-      let n = 0;
       var s = setInterval(
         () => {
-          if (n++, (this.$ele.dataset.hover === "false" && this.settings.mouse_over === "pause" || this.settings.mouse_over !== "pause") && (this.$ele.dataset.notifyDelay = i.toString(), this.settings.showProgressbar)) {
-            const o = this.$ele.querySelector('[data-notify="progressbar"] > div');
-            this.$ele.querySelector('[data-notify="progressbar"]').setAttribute(
-              "aria-valuenow",
-              n.toString()
-            ), o.style.width = n + "%";
+          const i = this.settings.delay - this.settings.timer;
+          if (this.$ele.dataset.hover === "false" && this.settings.mouse_over === "pause" || this.settings.mouse_over !== "pause") {
+            const o = (this.settings.delay - i) / this.settings.delay * 100;
+            if (this.$ele.dataset.notifyDelay = i.toString(), this.settings.showProgressbar) {
+              const n = this.$ele.querySelector('[data-notify="progressbar"] > div');
+              n.setAttribute(
+                "aria-valuenow",
+                o.toString()
+              ), n.style.width = o + "%";
+            }
           }
-          n === 100 && (clearInterval(s), this.close());
+          i <= -t.settings.timer && (clearInterval(s), this.close());
         },
-        l
+        t.settings.timer
       );
     }
   }
@@ -203,17 +205,17 @@ function c(...a) {
   let e = !1, s = 0;
   const i = a.length;
   Object.prototype.toString.call(a[0]) === "[object Boolean]" && (e = a[0], s++);
-  const l = (n) => {
-    for (const o in n)
-      Object.prototype.hasOwnProperty.call(n, o) && (e && Object.prototype.toString.call(n[o]) === "[object Object]" ? t[o] = c(!0, t[o], n[o]) : t[o] = n[o]);
+  const o = (n) => {
+    for (const l in n)
+      Object.prototype.hasOwnProperty.call(n, l) && (e && Object.prototype.toString.call(n[l]) === "[object Object]" ? t[l] = c(!0, t[l], n[l]) : t[l] = n[l]);
   };
   for (; s < i; s++) {
     const n = a[s];
-    l(n);
+    o(n);
   }
   return t;
 }
 export {
-  v as default
+  $ as default
 };
 //# sourceMappingURL=bootstrap-notify.js.map
