@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite';
 import { libInjectCss } from 'vite-plugin-lib-inject-css';
-import dts from 'vite-plugin-dts'
-import banner from 'vite-plugin-banner'
+import dts from 'vite-plugin-dts';
+import banner from 'vite-plugin-banner';
+import autoprefixer from 'autoprefixer';
 
 export default defineConfig({
 	plugins: [
@@ -16,6 +17,13 @@ export default defineConfig({
 * Website: https://w8tcha.github.io/bootstrap-notify/
 */`)
 	],
+	css: {
+		postcss: {
+			plugins: [
+				autoprefixer({}) // add options if needed
+			],
+		}
+	},
 	build: {
 		lib: {
 			// Could also be a dictionary or array of multiple entry points
