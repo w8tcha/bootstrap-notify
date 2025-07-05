@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Old+Standard+TT:400,700);
+
 .alert-minimalist {
 	background-color: rgb(241, 242, 240);
 	border-color: rgba(149, 149, 149, 0.3);
@@ -19,7 +21,6 @@
 	font-size: 80%;
 }
 
-@import url(http://fonts.googleapis.com/css?family=Old+Standard+TT:400,700);
 [data-notify="container"][class*="alert-pastel-"] {
 	background-color: rgb(255, 255, 238);
 	border-width: 0px;
