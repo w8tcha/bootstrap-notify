@@ -13,8 +13,8 @@ import './bootstrap-notify.css';class d {
   _defaults;
   animations;
   notify;
-  constructor(t, e) {
-    const s = {
+  constructor(t, s) {
+    const e = {
       element: "body",
       type: "info",
       allow_dismiss: !0,
@@ -49,7 +49,7 @@ import './bootstrap-notify.css';class d {
         "</div>"
       ].join("")
     };
-    this.settings = s;
+    this.settings = e;
     const i = {
       content: {
         message: typeof t == "object" ? t.message : t,
@@ -57,17 +57,17 @@ import './bootstrap-notify.css';class d {
         icon: typeof t == "object" && t.icon ? t.icon : ""
       }
     };
-    e = r({}, i, e), this.settings = r({}, s, e), this._defaults = s, this.animations = {
+    s = r({}, i, s), this.settings = r({}, e, s), this._defaults = e, this.animations = {
       start: "webkitAnimationStart oanimationstart MSAnimationStart animationstart",
       end: "webkitAnimationEnd oanimationend MSAnimationEnd animationend"
     }, typeof this.settings.offset == "number" && (this.settings.offset = { x: this.settings.offset, y: this.settings.offset }), (this.settings.allow_duplicates || !this.settings.allow_duplicates && !this.isDuplicateNotification(this)) && this.init();
   }
   isDuplicateNotification(t) {
-    let e = !1;
-    return document.querySelectorAll('[data-notify="container"]').forEach((s) => {
-      const i = s.querySelector('[data-notify="title"]')?.innerHTML.trim() ?? "", a = s.querySelector('[data-notify="message"]')?.innerHTML.trim() ?? "", n = i === t.settings.content?.title?.trim(), o = a === t.settings.content?.message?.trim();
-      return n && o && (e = !0), !e;
-    }), e;
+    let s = !1;
+    return document.querySelectorAll('[data-notify="container"]').forEach((e) => {
+      const i = e.querySelector('[data-notify="title"]')?.innerHTML.trim() ?? "", n = e.querySelector('[data-notify="message"]')?.innerHTML.trim() ?? "", a = i === t.settings.content?.title?.trim(), o = n === t.settings.content?.message?.trim();
+      return a && o && (s = !0), !s;
+    }), s;
   }
   init() {
     var t = this;
@@ -78,23 +78,23 @@ import './bootstrap-notify.css';class d {
       }
     };
   }
-  update(t, e) {
-    const s = typeof t == "string" ? { [t]: e } : t;
-    for (const i in s) {
-      const a = this.$ele.querySelector(`[data-notify="${i}"]`);
-      a && (a.innerHTML = s[i]);
+  update(t, s) {
+    const e = typeof t == "string" ? { [t]: s } : t;
+    for (const i in e) {
+      const n = this.$ele.querySelector(`[data-notify="${i}"]`);
+      n && (n.innerHTML = e[i]);
     }
   }
   buildNotify() {
-    const t = this.settings.content, e = document.createElement("div");
-    if (e.innerHTML = this.formatTemplate(
+    const t = this.settings.content, s = document.createElement("div");
+    if (s.innerHTML = this.formatTemplate(
       this.settings.template,
       this.settings.type,
       t.title,
       t.message
-    ), this.$ele = e.firstChild, this.$ele.dataset.notifyPosition = `${this.settings.placement.from}-${this.settings.placement.align}`, this.$ele.dataset.bsDelay = this.settings.delay.toString(), !this.settings.allow_dismiss) {
-      const s = this.$ele.querySelector('[data-notify="dismiss"]');
-      s && (s.style.display = "none");
+    ), this.$ele = s.firstChild, this.$ele.dataset.notifyPosition = `${this.settings.placement.from}-${this.settings.placement.align}`, this.$ele.dataset.bsDelay = this.settings.delay.toString(), !this.settings.allow_dismiss) {
+      const e = this.$ele.querySelector('[data-notify="dismiss"]');
+      e && (e.style.display = "none");
     }
     (this.settings.delay <= 0 && !this.settings.showProgressbar || !this.settings.showProgressbar) && this.$ele.querySelector('[data-notify="progressbar"]') && this.$ele.querySelector('[data-notify="progressbar"]').remove();
   }
@@ -102,45 +102,44 @@ import './bootstrap-notify.css';class d {
     if (this.settings.icon_type && this.settings.icon_type.toLowerCase() === "class")
       this.$ele.querySelector('[data-notify="icon"]').className += ` ${t}`;
     else if (this.$ele.querySelector('[data-notify="icon"]').nodeName === "IMG") {
-      const e = this.$ele.querySelector('[data-notify="icon"]');
-      e.src = this.settings.content.icon, e.className = "me-2";
+      const s = this.$ele.querySelector('[data-notify="icon"]');
+      s.src = this.settings.content.icon, s.className = "me-2";
     } else {
-      const e = document.createElement("img");
-      e.src = `${this.settings.content.icon}`, e.alt = "Notify Icon", e.className = "me-2", this.$ele.querySelector('[data-notify="icon"]').append(e);
+      const s = document.createElement("img");
+      s.src = `${this.settings.content.icon}`, s.alt = "Notify Icon", s.className = "me-2", this.$ele.querySelector('[data-notify="icon"]').append(s);
     }
   }
   placement() {
     const t = this;
-    if (this.$ele.className += ` ${this.settings.animate.enter}`, new c.Toast(this.$ele).show(), document.querySelector(".toast-container") == null) {
-      const i = document.createElement("div");
-      switch (i.className = "toast-container position-fixed", this.settings.placement.from) {
-        case "top":
-          i.className += " top-0";
-          break;
-        case "bottom":
-          i.className += " bottom-0";
-          break;
-      }
-      switch (this.settings.placement.align) {
-        case "left":
-          i.className += " start-0";
-          break;
-        case "right":
-          i.className += " end-0";
-          break;
-        case "center":
-          i.className += " start-50 translate-middle-x";
-          break;
-      }
-      document.querySelector(this.settings.element).append(i);
+    this.$ele.className += ` ${this.settings.animate.enter}`, new c.Toast(this.$ele).show();
+    var e = document.querySelector(".toast-container"), i = !1;
+    switch (document.querySelector(".toast-container") == null && (e = document.createElement("div"), i = !0), e.className = "toast-container position-fixed", this.settings.placement.from) {
+      case "top":
+        e.classList.add("top-0");
+        break;
+      case "bottom":
+        e.classList.add("bottom-0");
+        break;
     }
-    const s = document.querySelector(".toast-container");
-    s && (this.settings.newest_on_top ? s.prepend(this.$ele) : s.append(this.$ele)), typeof t.settings.onShow == "function" && t.settings.onShow.call(this.$ele);
+    switch (this.settings.placement.align) {
+      case "left":
+        e.classList.add("start-0");
+        break;
+      case "right":
+        e.classList.add("end-0");
+        break;
+      case "center":
+        e.classList.add("start-50", "translate-middle-x");
+        break;
+    }
+    i && document.querySelector(this.settings.element).append(e);
+    const n = document.querySelector(".toast-container");
+    n && (this.settings.newest_on_top ? n.prepend(this.$ele) : n.append(this.$ele)), typeof t.settings.onShow == "function" && t.settings.onShow.call(this.$ele);
   }
   bind() {
     var t = this;
-    const e = this.$ele.querySelector('[data-notify="dismiss"]');
-    if (e && e.addEventListener(
+    const s = this.$ele.querySelector('[data-notify="dismiss"]');
+    if (s && s.addEventListener(
       "click",
       () => {
         t.close();
@@ -162,20 +161,20 @@ import './bootstrap-notify.css';class d {
       }
     ), this.$ele.dataset.hover = "false", this.settings.delay && this.settings.delay > 0) {
       t.$ele.dataset.notifyDelay = t.settings.delay.toString();
-      var s = setInterval(
+      var e = setInterval(
         () => {
           const i = this.settings.delay - this.settings.timer;
           if (this.$ele.dataset.hover === "false" && this.settings.mouse_over === "pause" || this.settings.mouse_over !== "pause") {
-            const a = (this.settings.delay - i) / this.settings.delay * 100;
+            const n = (this.settings.delay - i) / this.settings.delay * 100;
             if (this.$ele.dataset.notifyDelay = i.toString(), this.settings.showProgressbar) {
-              const n = this.$ele.querySelector('[data-notify="progressbar"] > div');
-              n.setAttribute(
+              const a = this.$ele.querySelector('[data-notify="progressbar"] > div');
+              a.setAttribute(
                 "aria-valuenow",
-                a.toString()
-              ), n.style.width = a + "%";
+                n.toString()
+              ), a.style.width = n + "%";
             }
           }
-          i <= -t.settings.timer && (clearInterval(s), this.close());
+          i <= -t.settings.timer && (clearInterval(e), this.close());
         },
         t.settings.timer
       );
@@ -188,9 +187,9 @@ import './bootstrap-notify.css';class d {
   formatTemplate(...t) {
     return t[0].replace(
       /(\{\{\d\}\}|\{\d\})/g,
-      (s) => {
-        if (s.substring(0, 2) === "{{") return s;
-        const i = parseInt(s.match(/\d/)[0]);
+      (e) => {
+        if (e.substring(0, 2) === "{{") return e;
+        const i = parseInt(e.match(/\d/)[0]);
         return t[i + 1];
       }
     );
@@ -198,16 +197,16 @@ import './bootstrap-notify.css';class d {
 }
 function r(...l) {
   const t = {};
-  let e = !1, s = 0;
+  let s = !1, e = 0;
   const i = l.length;
-  Object.prototype.toString.call(l[0]) === "[object Boolean]" && (e = l[0], s++);
-  const a = (n) => {
-    for (const o in n)
-      Object.prototype.hasOwnProperty.call(n, o) && (e && Object.prototype.toString.call(n[o]) === "[object Object]" ? t[o] = r(!0, t[o], n[o]) : t[o] = n[o]);
+  Object.prototype.toString.call(l[0]) === "[object Boolean]" && (s = l[0], e++);
+  const n = (a) => {
+    for (const o in a)
+      Object.prototype.hasOwnProperty.call(a, o) && (s && Object.prototype.toString.call(a[o]) === "[object Object]" ? t[o] = r(!0, t[o], a[o]) : t[o] = a[o]);
   };
-  for (; s < i; s++) {
-    const n = l[s];
-    a(n);
+  for (; e < i; e++) {
+    const a = l[e];
+    n(a);
   }
   return t;
 }

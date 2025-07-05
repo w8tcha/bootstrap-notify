@@ -198,40 +198,40 @@ export default class Notify {
 
 		toast.show();
 
-		/*const pre = ['webkit-', 'moz-', 'o-', 'ms-', ''];
-
-		pre.forEach((prefix) => {
-			self.cssText += prefix + 'AnimationIterationCount: ' + 1;
-		});*/
-
 		// Create Wrapper Container
+		var container = document.querySelector<HTMLDivElement>('.toast-container');
+		var createContainer = false;
+
 		if (document.querySelector('.toast-container') == null) {
-			const container = document.createElement('div');
+			container = document.createElement('div');
+			createContainer = true;
+		}
 
-			container.className = 'toast-container position-fixed';
-
-			switch (this.settings.placement!.from) {
+		container!.className = 'toast-container position-fixed';
+		
+		switch (this.settings.placement!.from) {
 			case 'top':
-				container.className += ' top-0';
+				container!.classList.add('top-0');
 				break;
 			case 'bottom':
-				container.className += ' bottom-0';
+				container!.classList.add('bottom-0');
 				break;
-			}
-
-			switch (this.settings.placement!.align) {
+		}
+		
+		switch (this.settings.placement!.align) {
 			case 'left':
-				container.className += ' start-0';
+				container!.classList.add('start-0');
 				break;
 			case 'right':
-				container.className += ' end-0';
+				container!.classList.add('end-0');
 				break;
 			case 'center':
-				container.className += ' start-50 translate-middle-x';
+				container!.classList.add('start-50', 'translate-middle-x');
 				break;
-			}
+		}
 
-			document.querySelector(this.settings.element!)!.append(container);
+		if(createContainer) {
+			document.querySelector(this.settings.element!)!.append(container!);
 		}
 
 		const toastContainer = document.querySelector<HTMLElement>('.toast-container');
