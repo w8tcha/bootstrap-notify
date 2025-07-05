@@ -28,16 +28,18 @@
     "import": "./dist/bootstrap-notify.js",
     "require": "./dist/bootstrap-notify.umd.cjs"
   },
-  "browserslist": [ "last 2 versions" ],
+  "browserslist": [
+    "last 2 versions"
+  ],
   "peerDependencies": {
     "bootstrap": "^5.3"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",
     "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.5",
+    "postcss": "^8.5.6",
     "typescript": "^5.8.3",
-    "vite": "^6.3.2",
+    "vite": "^7.0.0",
     "vite-plugin-banner": "^0.8.1",
     "vite-plugin-dts": "^4.5.3",
     "vite-plugin-lib-inject-css": "^2.2.2"

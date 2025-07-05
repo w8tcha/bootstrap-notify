@@ -6,17 +6,14 @@
 * License: MIT License
 * Website: https://w8tcha.github.io/bootstrap-notify/
 */
-import './bootstrap-notify.css';var u = Object.defineProperty;
-var p = (a, t, e) => t in a ? u(a, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : a[t] = e;
-var r = (a, t, e) => p(a, typeof t != "symbol" ? t + "" : t, e);
-import * as b from "bootstrap";
-class $ {
+import * as c from "bootstrap";
+import './bootstrap-notify.css';class d {
+  $ele = document.createElement("div");
+  settings;
+  _defaults;
+  animations;
+  notify;
   constructor(t, e) {
-    r(this, "$ele", document.createElement("div"));
-    r(this, "settings");
-    r(this, "_defaults");
-    r(this, "animations");
-    r(this, "notify");
     const s = {
       element: "body",
       type: "info",
@@ -60,7 +57,7 @@ class $ {
         icon: typeof t == "object" && t.icon ? t.icon : ""
       }
     };
-    e = c({}, i, e), this.settings = c({}, s, e), this._defaults = s, this.animations = {
+    e = r({}, i, e), this.settings = r({}, s, e), this._defaults = s, this.animations = {
       start: "webkitAnimationStart oanimationstart MSAnimationStart animationstart",
       end: "webkitAnimationEnd oanimationend MSAnimationEnd animationend"
     }, typeof this.settings.offset == "number" && (this.settings.offset = { x: this.settings.offset, y: this.settings.offset }), (this.settings.allow_duplicates || !this.settings.allow_duplicates && !this.isDuplicateNotification(this)) && this.init();
@@ -68,9 +65,8 @@ class $ {
   isDuplicateNotification(t) {
     let e = !1;
     return document.querySelectorAll('[data-notify="container"]').forEach((s) => {
-      var d, h, m, f, g, y;
-      const i = ((d = s.querySelector('[data-notify="title"]')) == null ? void 0 : d.innerHTML.trim()) ?? "", o = ((h = s.querySelector('[data-notify="message"]')) == null ? void 0 : h.innerHTML.trim()) ?? "", n = i === ((f = (m = t.settings.content) == null ? void 0 : m.title) == null ? void 0 : f.trim()), l = o === ((y = (g = t.settings.content) == null ? void 0 : g.message) == null ? void 0 : y.trim());
-      return n && l && (e = !0), !e;
+      const i = s.querySelector('[data-notify="title"]')?.innerHTML.trim() ?? "", a = s.querySelector('[data-notify="message"]')?.innerHTML.trim() ?? "", n = i === t.settings.content?.title?.trim(), o = a === t.settings.content?.message?.trim();
+      return n && o && (e = !0), !e;
     }), e;
   }
   init() {
@@ -85,8 +81,8 @@ class $ {
   update(t, e) {
     const s = typeof t == "string" ? { [t]: e } : t;
     for (const i in s) {
-      const o = this.$ele.querySelector(`[data-notify="${i}"]`);
-      o && (o.innerHTML = s[i]);
+      const a = this.$ele.querySelector(`[data-notify="${i}"]`);
+      a && (a.innerHTML = s[i]);
     }
   }
   buildNotify() {
@@ -115,7 +111,7 @@ class $ {
   }
   placement() {
     const t = this;
-    if (this.$ele.className += ` ${this.settings.animate.enter}`, new b.Toast(this.$ele).show(), document.querySelector(".toast-container") == null) {
+    if (this.$ele.className += ` ${this.settings.animate.enter}`, new c.Toast(this.$ele).show(), document.querySelector(".toast-container") == null) {
       const i = document.createElement("div");
       switch (i.className = "toast-container position-fixed", this.settings.placement.from) {
         case "top":
@@ -170,13 +166,13 @@ class $ {
         () => {
           const i = this.settings.delay - this.settings.timer;
           if (this.$ele.dataset.hover === "false" && this.settings.mouse_over === "pause" || this.settings.mouse_over !== "pause") {
-            const o = (this.settings.delay - i) / this.settings.delay * 100;
+            const a = (this.settings.delay - i) / this.settings.delay * 100;
             if (this.$ele.dataset.notifyDelay = i.toString(), this.settings.showProgressbar) {
               const n = this.$ele.querySelector('[data-notify="progressbar"] > div');
               n.setAttribute(
                 "aria-valuenow",
-                o.toString()
-              ), n.style.width = o + "%";
+                a.toString()
+              ), n.style.width = a + "%";
             }
           }
           i <= -t.settings.timer && (clearInterval(s), this.close());
@@ -200,22 +196,22 @@ class $ {
     );
   }
 }
-function c(...a) {
+function r(...l) {
   const t = {};
   let e = !1, s = 0;
-  const i = a.length;
-  Object.prototype.toString.call(a[0]) === "[object Boolean]" && (e = a[0], s++);
-  const o = (n) => {
-    for (const l in n)
-      Object.prototype.hasOwnProperty.call(n, l) && (e && Object.prototype.toString.call(n[l]) === "[object Object]" ? t[l] = c(!0, t[l], n[l]) : t[l] = n[l]);
+  const i = l.length;
+  Object.prototype.toString.call(l[0]) === "[object Boolean]" && (e = l[0], s++);
+  const a = (n) => {
+    for (const o in n)
+      Object.prototype.hasOwnProperty.call(n, o) && (e && Object.prototype.toString.call(n[o]) === "[object Object]" ? t[o] = r(!0, t[o], n[o]) : t[o] = n[o]);
   };
   for (; s < i; s++) {
-    const n = a[s];
-    o(n);
+    const n = l[s];
+    a(n);
   }
   return t;
 }
 export {
-  $ as default
+  d as default
 };
 //# sourceMappingURL=bootstrap-notify.js.map
