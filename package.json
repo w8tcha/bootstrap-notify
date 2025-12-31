@@ -36,10 +36,10 @@
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",
-    "autoprefixer": "^10.4.22",
+    "autoprefixer": "^10.4.23",
     "postcss": "^8.5.6",
     "typescript": "^5.9.3",
-    "vite": "^7.2.4",
+    "vite": "^7.3.0",
     "vite-plugin-banner": "^0.8.1",
     "vite-plugin-dts": "^4.5.3",
     "vite-plugin-lib-inject-css": "^2.2.2"
