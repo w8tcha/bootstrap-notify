@@ -6,211 +6,186 @@
 * License: MIT License
 * Website: https://w8tcha.github.io/bootstrap-notify/
 */
-import * as c from "bootstrap";
-import './bootstrap-notify.css';class d {
-  $ele = document.createElement("div");
-  settings;
-  _defaults;
-  animations;
-  notify;
-  constructor(t, s) {
-    const e = {
-      element: "body",
-      type: "info",
-      allow_dismiss: !0,
-      allow_duplicates: !0,
-      newest_on_top: !0,
-      showProgressbar: !1,
-      placement: { from: "top", align: "right" },
-      delay: 5e3,
-      timer: 1e3,
-      mouse_over: "pause",
-      animate: { enter: "animated fadeInDown", exit: "animated fadeOutUp" },
-      onShow: void 0,
-      onShown: null,
-      onClose: void 0,
-      onClosed: null,
-      onClick: null,
-      icon_type: "class",
-      offset: { x: 0, y: 0 },
-      template: [
-        '<div data-notify="container" class="toast fade m-3" role="alert" aria-live="assertive" aria-atomic="true">',
-        '<div class="toast-header">',
-        '<span data-notify="icon" class="me-2 text-{0}"></span>',
-        '<strong class="me-auto fw-bold" data-notify="title">{1}</strong>',
-        '<button type="button" class="ms-2 mb-1 btn-close" data-bs-dismiss="toast" data-notify="dismiss" aria-label="Close">',
-        "</button>",
-        "</div>",
-        '<div class="toast-body" data-notify="message">',
-        "{2}",
-        '<div class="progress" role="progressbar" data-notify="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">',
-        '<div class="progress-bar bg-{0}" style="width: 0%;"></div>',
-        "</div>",
-        "</div>"
-      ].join("")
-    };
-    this.settings = e;
-    const i = {
-      content: {
-        message: typeof t == "object" ? t.message : t,
-        title: typeof t == "object" && t.title ? t.title : "",
-        icon: typeof t == "object" && t.icon ? t.icon : ""
-      }
-    };
-    s = r({}, i, s), this.settings = r({}, e, s), this._defaults = e, this.animations = {
-      start: "webkitAnimationStart oanimationstart MSAnimationStart animationstart",
-      end: "webkitAnimationEnd oanimationend MSAnimationEnd animationend"
-    }, typeof this.settings.offset == "number" && (this.settings.offset = { x: this.settings.offset, y: this.settings.offset }), (this.settings.allow_duplicates || !this.settings.allow_duplicates && !this.isDuplicateNotification(this)) && this.init();
-  }
-  isDuplicateNotification(t) {
-    let s = !1;
-    return document.querySelectorAll('[data-notify="container"]').forEach((e) => {
-      const i = e.querySelector('[data-notify="title"]')?.innerHTML.trim() ?? "", n = e.querySelector('[data-notify="message"]')?.innerHTML.trim() ?? "", a = i === t.settings.content?.title?.trim(), o = n === t.settings.content?.message?.trim();
-      return a && o && (s = !0), !s;
-    }), s;
-  }
-  init() {
-    var t = this;
-    this.buildNotify(), this.settings.content && this.settings.content.icon && this.setIcon(this.settings.content.icon), this.placement(), this.bind(), this.notify = {
-      $ele: this.$ele,
-      close() {
-        t.close();
-      }
-    };
-  }
-  update(t, s) {
-    const e = typeof t == "string" ? { [t]: s } : t;
-    for (const i in e) {
-      const n = this.$ele.querySelector(`[data-notify="${i}"]`);
-      n && (n.innerHTML = e[i]);
-    }
-  }
-  buildNotify() {
-    const t = this.settings.content, s = document.createElement("div");
-    if (s.innerHTML = this.formatTemplate(
-      this.settings.template,
-      this.settings.type,
-      t.title,
-      t.message
-    ), this.$ele = s.firstChild, this.$ele.dataset.notifyPosition = `${this.settings.placement.from}-${this.settings.placement.align}`, this.$ele.dataset.bsDelay = this.settings.delay.toString(), !this.settings.allow_dismiss) {
-      const e = this.$ele.querySelector('[data-notify="dismiss"]');
-      e && (e.style.display = "none");
-    }
-    (this.settings.delay <= 0 && !this.settings.showProgressbar || !this.settings.showProgressbar) && this.$ele.querySelector('[data-notify="progressbar"]') && this.$ele.querySelector('[data-notify="progressbar"]').remove();
-  }
-  setIcon(t) {
-    if (this.settings.icon_type && this.settings.icon_type.toLowerCase() === "class")
-      this.$ele.querySelector('[data-notify="icon"]').className += ` ${t}`;
-    else if (this.$ele.querySelector('[data-notify="icon"]').nodeName === "IMG") {
-      const s = this.$ele.querySelector('[data-notify="icon"]');
-      s.src = this.settings.content.icon, s.className = "me-2";
-    } else {
-      const s = document.createElement("img");
-      s.src = `${this.settings.content.icon}`, s.alt = "Notify Icon", s.className = "me-2", this.$ele.querySelector('[data-notify="icon"]').append(s);
-    }
-  }
-  placement() {
-    const t = this;
-    this.$ele.className += ` ${this.settings.animate.enter}`, new c.Toast(this.$ele).show();
-    var e = document.querySelector(".toast-container"), i = !1;
-    switch (document.querySelector(".toast-container") == null && (e = document.createElement("div"), i = !0), e.className = "toast-container position-fixed", this.settings.placement.from) {
-      case "top":
-        e.classList.add("top-0");
-        break;
-      case "bottom":
-        e.classList.add("bottom-0");
-        break;
-    }
-    switch (this.settings.placement.align) {
-      case "left":
-        e.classList.add("start-0");
-        break;
-      case "right":
-        e.classList.add("end-0");
-        break;
-      case "center":
-        e.classList.add("start-50", "translate-middle-x");
-        break;
-    }
-    i && document.querySelector(this.settings.element).append(e);
-    const n = document.querySelector(".toast-container");
-    n && (this.settings.newest_on_top ? n.prepend(this.$ele) : n.append(this.$ele)), typeof t.settings.onShow == "function" && t.settings.onShow.call(this.$ele);
-  }
-  bind() {
-    var t = this;
-    const s = this.$ele.querySelector('[data-notify="dismiss"]');
-    if (s && s.addEventListener(
-      "click",
-      () => {
-        t.close();
-      }
-    ), t.settings.onClick && this.$ele.addEventListener(
-      "click",
-      (i) => {
-        i.target !== t.$ele.querySelector('[data-notify="dismiss"]') && t.settings.onClick.call(this);
-      }
-    ), this.$ele.addEventListener(
-      "mouseover",
-      () => {
-        this.$ele.dataset.hover = "true";
-      }
-    ), this.$ele.addEventListener(
-      "mouseout",
-      () => {
-        this.$ele.dataset.hover = "false";
-      }
-    ), this.$ele.dataset.hover = "false", this.settings.delay && this.settings.delay > 0) {
-      t.$ele.dataset.notifyDelay = t.settings.delay.toString();
-      var e = setInterval(
-        () => {
-          const i = this.settings.delay - this.settings.timer;
-          if (this.$ele.dataset.hover === "false" && this.settings.mouse_over === "pause" || this.settings.mouse_over !== "pause") {
-            const n = (this.settings.delay - i) / this.settings.delay * 100;
-            if (this.$ele.dataset.notifyDelay = i.toString(), this.settings.showProgressbar) {
-              const a = this.$ele.querySelector('[data-notify="progressbar"] > div');
-              a.setAttribute(
-                "aria-valuenow",
-                n.toString()
-              ), a.style.width = n + "%";
-            }
-          }
-          i <= -t.settings.timer && (clearInterval(e), this.close());
-        },
-        t.settings.timer
-      );
-    }
-  }
-  close() {
-    const t = this;
-    this.$ele.dataset.closing = "true", this.$ele.className = `toast ${this.settings.animate.exit}`, t.settings.onClose && t.settings.onClose.call(this.$ele), t.$ele.remove();
-  }
-  formatTemplate(...t) {
-    return t[0].replace(
-      /(\{\{\d\}\}|\{\d\})/g,
-      (e) => {
-        if (e.substring(0, 2) === "{{") return e;
-        const i = parseInt(e.match(/\d/)[0]);
-        return t[i + 1];
-      }
-    );
-  }
-}
-function r(...l) {
-  const t = {};
-  let s = !1, e = 0;
-  const i = l.length;
-  Object.prototype.toString.call(l[0]) === "[object Boolean]" && (s = l[0], e++);
-  const n = (a) => {
-    for (const o in a)
-      Object.prototype.hasOwnProperty.call(a, o) && (s && Object.prototype.toString.call(a[o]) === "[object Object]" ? t[o] = r(!0, t[o], a[o]) : t[o] = a[o]);
-  };
-  for (; e < i; e++) {
-    const a = l[e];
-    n(a);
-  }
-  return t;
-}
-export {
-  d as default
+import * as e from "bootstrap";
+import './bootstrap-notify.css';//#region src/bootstrap-notify.ts
+var t = class {
+	$ele = document.createElement("div");
+	settings;
+	_defaults;
+	animations;
+	notify;
+	constructor(e, t) {
+		let r = {
+			element: "body",
+			type: "info",
+			allow_dismiss: !0,
+			allow_duplicates: !0,
+			newest_on_top: !0,
+			showProgressbar: !1,
+			placement: {
+				from: "top",
+				align: "right"
+			},
+			delay: 5e3,
+			timer: 1e3,
+			mouse_over: "pause",
+			animate: {
+				enter: "animated fadeInDown",
+				exit: "animated fadeOutUp"
+			},
+			onShow: void 0,
+			onShown: null,
+			onClose: void 0,
+			onClosed: null,
+			onClick: null,
+			icon_type: "class",
+			offset: {
+				x: 0,
+				y: 0
+			},
+			template: [
+				"<div data-notify=\"container\" class=\"toast fade m-3\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\">",
+				"<div class=\"toast-header\">",
+				"<span data-notify=\"icon\" class=\"me-2 text-{0}\"></span>",
+				"<strong class=\"me-auto fw-bold\" data-notify=\"title\">{1}</strong>",
+				"<button type=\"button\" class=\"ms-2 mb-1 btn-close\" data-bs-dismiss=\"toast\" data-notify=\"dismiss\" aria-label=\"Close\">",
+				"</button>",
+				"</div>",
+				"<div class=\"toast-body\" data-notify=\"message\">",
+				"{2}",
+				"<div class=\"progress\" role=\"progressbar\" data-notify=\"progressbar\" aria-valuenow=\"0\" aria-valuemin=\"0\" aria-valuemax=\"100\">",
+				"<div class=\"progress-bar bg-{0}\" style=\"width: 0%;\"></div>",
+				"</div>",
+				"</div>"
+			].join("")
+		};
+		this.settings = r, t = n({}, { content: {
+			message: typeof e == "object" ? e.message : e,
+			title: typeof e == "object" && e.title ? e.title : "",
+			icon: typeof e == "object" && e.icon ? e.icon : ""
+		} }, t), this.settings = n({}, r, t), this._defaults = r, this.animations = {
+			start: "webkitAnimationStart oanimationstart MSAnimationStart animationstart",
+			end: "webkitAnimationEnd oanimationend MSAnimationEnd animationend"
+		}, typeof this.settings.offset == "number" && (this.settings.offset = {
+			x: this.settings.offset,
+			y: this.settings.offset
+		}), (this.settings.allow_duplicates || !this.settings.allow_duplicates && !this.isDuplicateNotification(this)) && this.init();
+	}
+	isDuplicateNotification(e) {
+		let t = !1;
+		return document.querySelectorAll("[data-notify=\"container\"]").forEach((n) => {
+			let r = n.querySelector("[data-notify=\"title\"]")?.innerHTML.trim() ?? "", i = n.querySelector("[data-notify=\"message\"]")?.innerHTML.trim() ?? "", a = r === e.settings.content?.title?.trim(), o = i === e.settings.content?.message?.trim();
+			return a && o && (t = !0), !t;
+		}), t;
+	}
+	init() {
+		var e = this;
+		this.buildNotify(), this.settings.content && this.settings.content.icon && this.setIcon(this.settings.content.icon), this.placement(), this.bind(), this.notify = {
+			$ele: this.$ele,
+			close() {
+				e.close();
+			}
+		};
+	}
+	update(e, t) {
+		let n = typeof e == "string" ? { [e]: t } : e;
+		for (let e in n) {
+			let t = this.$ele.querySelector(`[data-notify="${e}"]`);
+			t && (t.innerHTML = n[e]);
+		}
+	}
+	buildNotify() {
+		let e = this.settings.content, t = document.createElement("div");
+		if (t.innerHTML = this.formatTemplate(this.settings.template, this.settings.type, e.title, e.message), this.$ele = t.firstChild, this.$ele.dataset.notifyPosition = `${this.settings.placement.from}-${this.settings.placement.align}`, this.$ele.dataset.bsDelay = this.settings.delay.toString(), !this.settings.allow_dismiss) {
+			let e = this.$ele.querySelector("[data-notify=\"dismiss\"]");
+			e && (e.style.display = "none");
+		}
+		(this.settings.delay <= 0 && !this.settings.showProgressbar || !this.settings.showProgressbar) && this.$ele.querySelector("[data-notify=\"progressbar\"]") && this.$ele.querySelector("[data-notify=\"progressbar\"]").remove();
+	}
+	setIcon(e) {
+		if (this.settings.icon_type && this.settings.icon_type.toLowerCase() === "class") this.$ele.querySelector("[data-notify=\"icon\"]").className += ` ${e}`;
+		else if (this.$ele.querySelector("[data-notify=\"icon\"]").nodeName === "IMG") {
+			let e = this.$ele.querySelector("[data-notify=\"icon\"]");
+			e.src = this.settings.content.icon, e.className = "me-2";
+		} else {
+			let e = document.createElement("img");
+			e.src = `${this.settings.content.icon}`, e.alt = "Notify Icon", e.className = "me-2", this.$ele.querySelector("[data-notify=\"icon\"]").append(e);
+		}
+	}
+	placement() {
+		let t = this;
+		this.$ele.className += ` ${this.settings.animate.enter}`, new e.Toast(this.$ele).show();
+		var n = document.querySelector(".toast-container"), r = !1;
+		switch (document.querySelector(".toast-container") ?? (n = document.createElement("div"), r = !0), n.className = "toast-container position-fixed", this.settings.placement.from) {
+			case "top":
+				n.classList.add("top-0");
+				break;
+			case "bottom":
+				n.classList.add("bottom-0");
+				break;
+		}
+		switch (this.settings.placement.align) {
+			case "left":
+				n.classList.add("start-0");
+				break;
+			case "right":
+				n.classList.add("end-0");
+				break;
+			case "center":
+				n.classList.add("start-50", "translate-middle-x");
+				break;
+		}
+		r && document.querySelector(this.settings.element).append(n);
+		let i = document.querySelector(".toast-container");
+		i && (this.settings.newest_on_top ? i.prepend(this.$ele) : i.append(this.$ele)), typeof t.settings.onShow == "function" && t.settings.onShow.call(this.$ele);
+	}
+	bind() {
+		var e = this;
+		let t = this.$ele.querySelector("[data-notify=\"dismiss\"]");
+		if (t && t.addEventListener("click", () => {
+			e.close();
+		}), e.settings.onClick && this.$ele.addEventListener("click", (t) => {
+			t.target !== e.$ele.querySelector("[data-notify=\"dismiss\"]") && e.settings.onClick.call(this);
+		}), this.$ele.addEventListener("mouseover", () => {
+			this.$ele.dataset.hover = "true";
+		}), this.$ele.addEventListener("mouseout", () => {
+			this.$ele.dataset.hover = "false";
+		}), this.$ele.dataset.hover = "false", this.settings.delay && this.settings.delay > 0) {
+			e.$ele.dataset.notifyDelay = e.settings.delay.toString();
+			var n = setInterval(() => {
+				let t = this.settings.delay - this.settings.timer;
+				if (this.$ele.dataset.hover === "false" && this.settings.mouse_over === "pause" || this.settings.mouse_over !== "pause") {
+					let e = (this.settings.delay - t) / this.settings.delay * 100;
+					if (this.$ele.dataset.notifyDelay = t.toString(), this.settings.showProgressbar) {
+						let t = this.$ele.querySelector("[data-notify=\"progressbar\"] > div");
+						t.setAttribute("aria-valuenow", e.toString()), t.style.width = e + "%";
+					}
+				}
+				t <= -e.settings.timer && (clearInterval(n), this.close());
+			}, e.settings.timer);
+		}
+	}
+	close() {
+		let e = this;
+		this.$ele.dataset.closing = "true", this.$ele.className = `toast ${this.settings.animate.exit}`, e.settings.onClose && e.settings.onClose.call(this.$ele), e.$ele.remove();
+	}
+	formatTemplate(...e) {
+		return e[0].replace(/(\{\{\d\}\}|\{\d\})/g, (t) => t.substring(0, 2) === "{{" ? t : e[parseInt(t.match(/\d/)[0]) + 1]);
+	}
 };
+function n(...e) {
+	let t = {}, r = !1, i = 0, a = e.length;
+	Object.prototype.toString.call(e[0]) === "[object Boolean]" && (r = e[0], i++);
+	let o = (e) => {
+		for (let i in e) Object.prototype.hasOwnProperty.call(e, i) && (r && Object.prototype.toString.call(e[i]) === "[object Object]" ? t[i] = n(!0, t[i], e[i]) : t[i] = e[i]);
+	};
+	for (; i < a; i++) {
+		let t = e[i];
+		o(t);
+	}
+	return t;
+}
+//#endregion
+export { t as default };
+
 //# sourceMappingURL=bootstrap-notify.js.map
