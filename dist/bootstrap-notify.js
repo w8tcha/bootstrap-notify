@@ -120,9 +120,7 @@ var t = class {
 			case "top":
 				n.classList.add("top-0");
 				break;
-			case "bottom":
-				n.classList.add("bottom-0");
-				break;
+			case "bottom": n.classList.add("bottom-0");
 		}
 		switch (this.settings.placement.align) {
 			case "left":
@@ -131,9 +129,7 @@ var t = class {
 			case "right":
 				n.classList.add("end-0");
 				break;
-			case "center":
-				n.classList.add("start-50", "translate-middle-x");
-				break;
+			case "center": n.classList.add("start-50", "translate-middle-x");
 		}
 		r && document.querySelector(this.settings.element).append(n);
 		let i = document.querySelector(".toast-container");
