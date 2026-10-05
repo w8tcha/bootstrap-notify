@@ -39,7 +39,7 @@
     "@typescript/typescript6": "^6.0.2",
     "autoprefixer": "^10.6.1",
     "postcss": "^8.5.28",
-    "vite": "^8.3.1",
+    "vite": "^8.3.2",
     "vite-plugin-banner": "^0.8.1",
     "vite-plugin-dts": "^5.1.1",
     "vite-plugin-lib-inject-css": "^2.2.2"
